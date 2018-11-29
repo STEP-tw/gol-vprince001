@@ -39,7 +39,7 @@ const initializeWorld = function(limits, currGeneration) {
 
 const createWorld = function(limits) {
   let world = [];
-  for(let currentSize = 0; currentSize <= limits.bottomY; currentSize++) {
+  for(let currentSize = 0; currentSize <= limits.bottomX; currentSize++) {
     world.push(createArray(limits.bottomY+1));
   }
   return world;
