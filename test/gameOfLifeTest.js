@@ -30,4 +30,14 @@ describe('nextGeneration',() => {
     assert.ok(isSame(actualNextGen,expectedNextGen));
     assert.ok(isSameArity(actualNextGen,expectedNextGen));
   });
+
+  it('should return same alive cells according to rule 2',() => {
+    let currentGeneration = [[1,2],[1,3],[2,1],[2,4],[3,2],[3,3]];
+    let expectedNextGen = [[1,2],[1,3],[2,1],[2,4],[3,2],[3,3]];
+    let bounds = {topLeft: [0,0], bottomRight: [4,5]};
+    let actualNextGen = nextGeneration(currentGeneration,bounds);
+    assert.ok(isSame(actualNextGen,expectedNextGen));
+    assert.ok(isSameArity(actualNextGen,expectedNextGen));
+  });
+
 });

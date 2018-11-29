@@ -14,11 +14,6 @@ const nextGeneration = function(currGeneration,bounds) {
   return newAliveCells;
 };
 
-
-const checkAliveCell = function(nextWorld,element) { 
-  return nextWorld[element[0]][element[1]]==1;
-}
-
 const findLimits = function(bounds) { 
   return { 
     "topX" : bounds.topLeft[0],
@@ -26,7 +21,7 @@ const findLimits = function(bounds) {
     "bottomX" : bounds.bottomRight[0], 
     "bottomY" : bounds.bottomRight[1]
   };
-}
+};
 
 const initializeWorld = function(limits, currGeneration) {
   let world = createWorld(limits);
@@ -58,6 +53,10 @@ const getAllCoordinates = function(limits) {
   }
   return coordinates;
 };
+
+const checkAliveCell = function(nextWorld,element) { 
+  return nextWorld[element[0]][element[1]]==1;
+}
 
 const modifyCellStatus = function(world,limits,coordinate) { 
   let xCoordinate = coordinate[0];
