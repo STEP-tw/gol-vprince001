@@ -3,8 +3,10 @@ const nextGeneration = function(currGeneration,bounds) {
   let world = initializeWorld(limits, currGeneration);
   let nextWorld = world.map(x => x.slice());
   let allCoordinates = getAllCoordinates(limits);
+  let con = contains.bind(null,currGeneration);
 
-  for (let coordinate of allCoordinates) {
+  for (coordinate of allCoordinates) {
+    let neighbours = getNeighbours(coordinate, limits);
     nextWorld[coordinate[0]][coordinate[1]] = modifyCellStatus(world,limits,coordinate);
   }
 
@@ -13,6 +15,8 @@ const nextGeneration = function(currGeneration,bounds) {
   let newAliveCells =  nextWorldCoordinates.filter(isAlive);
   return newAliveCells;
 };
+
+const contains = (list,element) => list.some(e=>e[0]===element[0] && e[1]===element[1]);
 
 const findLimits = function(bounds) { 
   return { 
