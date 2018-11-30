@@ -1,21 +1,21 @@
 const nextGeneration = function(currGeneration,bounds) {
-  let limits = findLimits(bounds);
+  let limits = extractLimits(bounds);
   let allCoordinates = getAllCoordinates(limits);
-  let isContain = contains.bind(null, currGeneration);
-  let result = [];
+  let includes = contains.bind(null, currGeneration);
+  let aliveCells = [];
 
   for (coordinate of allCoordinates) {
     let neighbours = getNeighbours(coordinate, limits);
-    let count = neighbours.filter(isContain).length;
-    if((count == 2 && contains(currGeneration, coordinate)) || checkRules(count)==1)
-      result.push(coordinate);
+    let numOfNeighbours = neighbours.filter(includes).length;
+    if((numOfNeighbours == 2 && contains(currGeneration, coordinate)) || verifyRules(numOfNeighbours)==1)
+      aliveCells.push(coordinate);
   }
-  return result;
+  return aliveCells;
 };
 
 const contains = (list,element) => list.some(e=>e[0]===element[0] && e[1]===element[1]);
 
-const findLimits = function(bounds) { 
+const extractLimits = function(bounds) { 
   return { 
     "topX" : bounds.topLeft[0],
     "topY" : bounds.topLeft[1],
@@ -25,30 +25,30 @@ const findLimits = function(bounds) {
 };
 
 const getAllCoordinates = function(limits) { 
-  let coordinates = [];
+  let allCoordinates = [];
   for(let row = limits.topX; row <= limits.bottomX; row++) {
     for(let column=limits.topY; column <= limits.bottomY ; column++) {
-      coordinates.push([row,column]);
+      allCoordinates.push([row,column]);
     }
   }
-  return coordinates;
+  return allCoordinates;
 };
 
 const getNeighbours = function(cellCoordinates,limits) {
-  let rowCoordinates = [ cellCoordinates[0]-1, cellCoordinates[0], cellCoordinates[0]+1 ];
-  let columnCoordinates = [ cellCoordinates[1]-1, cellCoordinates[1], cellCoordinates[1]+1 ];
-  let zip = zipArray(columnCoordinates);
-  let neighbourCandidates = rowCoordinates.reduce(zip,[]);
+  let rowNeighbours = [ cellCoordinates[0]-1, cellCoordinates[0], cellCoordinates[0]+1 ];
+  let columnNeighbours = [ cellCoordinates[1]-1, cellCoordinates[1], cellCoordinates[1]+1 ];
+  let cartisianProduct= getCartisianProduct(columnNeighbours);
+  let neighbourCandidates = rowNeighbours.reduce(cartisianProduct,[]);
   let neighbours = getValidNeighbours(cellCoordinates, neighbourCandidates,limits);
   return neighbours;
 };
 
-const zipArray = function(columnCoordinates) {
-  return function(zippedArray, element) {
-    for(let index = 0; index < columnCoordinates.length; index++) {
-      zippedArray.push([element, columnCoordinates[index]]);
+const getCartisianProduct = function(columnNeighbours) {
+  return function(cartisianProduct, element) {
+    for(let index = 0; index < columnNeighbours.length; index++) {
+      cartisianProduct.push([element, columnNeighbours[index]]);
     }
-    return zippedArray; 
+    return cartisianProduct; 
   }
 };
 
@@ -71,11 +71,11 @@ const validateNeighbours = function(limits) {
   };
 };
 
-const checkRules = function(count) {
-  if(count < 2 || count > 3) {
+const verifyRules = function(numOfNeighbours) {
+  if(numOfNeighbours < 2 || numOfNeighbours > 3) {
     return 0;
   }
-  if(count == 3) {
+  if(numOfNeighbours == 3) {
     return 1;
   }
 };
