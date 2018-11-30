@@ -4,7 +4,7 @@ const nextGeneration = function(currGeneration,bounds) {
   let includes = contains.bind(null, currGeneration);
   let aliveCells = [];
 
-  for (coordinate of allCoordinates) {
+  for (let coordinate of allCoordinates) {
     let neighbours = getNeighbours(coordinate, limits);
     let numOfNeighbours = neighbours.filter(includes).length;
     if((numOfNeighbours == 2 && contains(currGeneration, coordinate)) || verifyRules(numOfNeighbours)==1)
