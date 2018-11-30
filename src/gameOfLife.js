@@ -1,19 +1,17 @@
 const nextGeneration = function(currGeneration,bounds) {
   let limits = findLimits(bounds);
-  let world = initializeWorld(limits, currGeneration);
-  let nextWorld = world.map(x => x.slice());
   let allCoordinates = getAllCoordinates(limits);
-  let con = contains.bind(null,currGeneration);
+  let isContain = contains.bind(null, currGeneration);
+  let result = [];
 
   for (coordinate of allCoordinates) {
     let neighbours = getNeighbours(coordinate, limits);
-    nextWorld[coordinate[0]][coordinate[1]] = modifyCellStatus(world,limits,coordinate);
+    let count = neighbours.filter(isContain).length;
+    if((count == 2 && contains(currGeneration, coordinate)) || checkRules(count)==1)
+      result.push(coordinate);
   }
 
-  let nextWorldCoordinates = getAllCoordinates(limits);
-  let isAlive = checkAliveCell.bind(null, nextWorld);
-  let newAliveCells =  nextWorldCoordinates.filter(isAlive);
-  return newAliveCells;
+  return result;
 };
 
 const contains = (list,element) => list.some(e=>e[0]===element[0] && e[1]===element[1]);
@@ -107,15 +105,13 @@ const validateNeighbours = function(limits) {
   };
 };
 
-const checkRules = function(world,coordinate ,neighbours) {
-  let aliveCells = getNumberOfAliveCells(world, neighbours);
-  if(aliveCells < 2 || aliveCells > 3) {
+const checkRules = function(count) {
+  if(count < 2 || count > 3) {
     return 0;
   }
-  if(aliveCells == 3) {
+  if(count == 3) {
     return 1;
   }
-  return world[coordinate[0]][coordinate[1]];
 };
 
 const getNumberOfAliveCells = function(world, neighbours) {
