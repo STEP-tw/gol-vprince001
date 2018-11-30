@@ -67,7 +67,7 @@ const remove = function(cell) {
 
 const validateNeighbours = function(limits) { 
   return function (element) { 
-    return ! ( element.some( (element => element < limits.topX || element > limits.bottomX) ) )
+    return ! ( element.some( (element => (element < limits.topX && element < limits.topY) || (element > limits.bottomX && element > limits.bottomY) ) ) )
   };
 };
 
