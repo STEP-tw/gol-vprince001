@@ -10,7 +10,6 @@ const nextGeneration = function(currGeneration,bounds) {
     if((count == 2 && contains(currGeneration, coordinate)) || checkRules(count)==1)
       result.push(coordinate);
   }
-
   return result;
 };
 
@@ -25,27 +24,6 @@ const findLimits = function(bounds) {
   };
 };
 
-const initializeWorld = function(limits, currGeneration) {
-  let world = createWorld(limits);
-  currGeneration.reduce(function(world, element) { 
-    world[element[0]][element[1]] = 1; 
-    return world
-  }, world)
-  return world;
-};
-
-const createWorld = function(limits) {
-  let world = [];
-  for(let currentSize = 0; currentSize <= limits.bottomX; currentSize++) {
-    world.push(createArray(limits.bottomY+1));
-  }
-  return world;
-};
-
-const createArray = function(size) {
-  return new Array(size).fill(0);
-};
-
 const getAllCoordinates = function(limits) { 
   let coordinates = [];
   for(let row = limits.topX; row <= limits.bottomX; row++) {
@@ -54,18 +32,6 @@ const getAllCoordinates = function(limits) {
     }
   }
   return coordinates;
-};
-
-const checkAliveCell = function(nextWorld,element) { 
-  return nextWorld[element[0]][element[1]]==1;
-}
-
-const modifyCellStatus = function(world,limits,coordinate) { 
-  let xCoordinate = coordinate[0];
-  let yCoordinate = coordinate[1];
-  let neighbours = getNeighbours(coordinate,limits);
-  let cellStatus = checkRules(world,coordinate ,neighbours);
-  return cellStatus;
 };
 
 const getNeighbours = function(cellCoordinates,limits) {
@@ -111,16 +77,6 @@ const checkRules = function(count) {
   }
   if(count == 3) {
     return 1;
-  }
-};
-
-const getNumberOfAliveCells = function(world, neighbours) {
-  return neighbours.reduce(sum(world),0);
-};
-
-const sum = function(world) {
-  return function(accumulator,neighbour) {
-    return accumulator + world[neighbour[0]][neighbour[1]];
   }
 };
 
