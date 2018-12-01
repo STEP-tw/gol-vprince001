@@ -19,4 +19,14 @@ const remove = function(cell) {
   };
 };
 
-module.exports = { getCartisianProduct, validateNeighbours, remove };
+const getValidNeighbours = function(cell, neighbourCandidates,limits) { 
+  let removeGivenCell = remove(cell);
+  let allNeighbours = neighbourCandidates.filter(removeGivenCell);
+  let isValidNeighbour = validateNeighbours(limits);
+  return allNeighbours.filter(isValidNeighbour);
+};
+
+module.exports = { 
+  getCartisianProduct, validateNeighbours, 
+  remove, getValidNeighbours
+};

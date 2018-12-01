@@ -1,5 +1,7 @@
 const assert = require("assert");
-const {getCartisianProduct, validateNeighbours, remove } = require("../src/lib.js");
+const {
+  getCartisianProduct, validateNeighbours,
+  remove, getValidNeighbours } = require("../src/lib.js");
 
 describe("getCartisianProduct",function() {
 
@@ -54,6 +56,22 @@ describe("remove",function() {
   it("should return true for different cell and element",function() {
     cellToRemove = remove([1,1]);
     assert.equal(cellToRemove([0,1]),true);
+  });
+
+});
+
+describe("getValidNeighbours",function() {
+
+  it("should return empty array for no neighbours",function() {
+    assert.deepEqual(getValidNeighbours([0,1],[],{topX : 0, topY : 0, bottomX : 3, bottomY :3}),[]);
+  });
+
+  it("should return array of non zero array element ",function() {
+    assert.deepEqual(getValidNeighbours([0,1],[[1,1],[1,2],[-1,1],[2,2]],{topX : 0, topY : 0, bottomX : 3, bottomY :3}),[[1,1],[1,2],[2,2]]);
+  });
+
+  it("should return array of elements < gridSize ",function() {
+    assert.deepEqual(getValidNeighbours([0,1],[[1,1],[1,3],[-1,1],[2,4]],{topX : 0, topY : 0, bottomX : 3, bottomY :3}),[[1,1],[1,3]]);
   });
 
 });
