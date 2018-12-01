@@ -1,3 +1,5 @@
+const { getCartisianProduct } = require("./lib.js");
+
 const nextGeneration = function(currGeneration,bounds) {
   let limits = extractLimits(bounds);
   let allCoordinates = getAllCoordinates(limits);
@@ -41,15 +43,6 @@ const getNeighbours = function(cellCoordinates,limits) {
   let neighbourCandidates = rowNeighbours.reduce(cartisianProduct,[]);
   let neighbours = getValidNeighbours(cellCoordinates, neighbourCandidates,limits);
   return neighbours;
-};
-
-const getCartisianProduct = function(columnNeighbours) {
-  return function(cartisianProduct, element) {
-    for(let index = 0; index < columnNeighbours.length; index++) {
-      cartisianProduct.push([element, columnNeighbours[index]]);
-    }
-    return cartisianProduct; 
-  }
 };
 
 const getValidNeighbours = function(cell, neighbourCandidates,limits) { 
