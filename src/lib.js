@@ -13,4 +13,10 @@ const validateNeighbours = function(limits) {
   };
 };
 
-module.exports = { getCartisianProduct, validateNeighbours };
+const remove = function(cell) { 
+  return function (element) { 
+    return !( element[0] == cell[0] && element[1] == cell[1] )
+  };
+};
+
+module.exports = { getCartisianProduct, validateNeighbours, remove };

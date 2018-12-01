@@ -1,5 +1,5 @@
 const assert = require("assert");
-const {getCartisianProduct, validateNeighbours} = require("../src/lib.js");
+const {getCartisianProduct, validateNeighbours, remove } = require("../src/lib.js");
 
 describe("getCartisianProduct",function() {
 
@@ -40,6 +40,20 @@ describe("validateNeighbours",function() {
   it("should return false for size < 0",function() {
     isValidNeighbour = validateNeighbours(3);
     assert.equal(isValidNeighbour([1,2]),true)
+  });
+
+});
+
+describe("remove",function() {
+
+  it("should return false for same cell and element",function() {
+    cellToRemove = remove([0,1]);
+    assert.equal(cellToRemove([0,1]),false);
+  });
+
+  it("should return true for different cell and element",function() {
+    cellToRemove = remove([1,1]);
+    assert.equal(cellToRemove([0,1]),true);
   });
 
 });
