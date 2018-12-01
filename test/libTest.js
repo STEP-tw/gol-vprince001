@@ -1,7 +1,7 @@
 const assert = require("assert");
 const {
   getCartisianProduct, validateNeighbours,
-  remove, getValidNeighbours } = require("../src/lib.js");
+  remove, getValidNeighbours, getNeighbours } = require("../src/lib.js");
 
 describe("getCartisianProduct",function() {
 
@@ -74,4 +74,12 @@ describe("getValidNeighbours",function() {
     assert.deepEqual(getValidNeighbours([0,1],[[1,1],[1,3],[-1,1],[2,4]],{topX : 0, topY : 0, bottomX : 3, bottomY :3}),[[1,1],[1,3]]);
   });
 
+});
+
+describe("getNeighbours",function() {
+
+  it("should return array of neighbour of given cell",function() {
+    assert.deepEqual(getNeighbours([0,0],{topX : 0 ,topY : 0 ,bottomX : 3, bottomY :3}),[[0,1],[1,0],[1,1]]);
+    assert.deepEqual(getNeighbours([0,1],{topX : 0 ,topY : 0 ,bottomX : 3, bottomY :3}),[[0,0],[0,2],[1,0],[1,1],[1,2]]);
+  });
 });

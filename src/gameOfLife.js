@@ -1,6 +1,6 @@
 const { 
   getCartisianProduct, validateNeighbours,
-  remove, getValidNeighbours } = require("./lib.js");
+  remove, getValidNeighbours, getNeighbours } = require("./lib.js");
 
 const nextGeneration = function(currGeneration,bounds) {
   let limits = extractLimits(bounds);
@@ -36,15 +36,6 @@ const getAllCoordinates = function(limits) {
     }
   }
   return allCoordinates;
-};
-
-const getNeighbours = function(cellCoordinates,limits) {
-  let rowNeighbours = [ cellCoordinates[0]-1, cellCoordinates[0], cellCoordinates[0]+1 ];
-  let columnNeighbours = [ cellCoordinates[1]-1, cellCoordinates[1], cellCoordinates[1]+1 ];
-  let cartisianProduct= getCartisianProduct(columnNeighbours);
-  let neighbourCandidates = rowNeighbours.reduce(cartisianProduct,[]);
-  let neighbours = getValidNeighbours(cellCoordinates, neighbourCandidates,limits);
-  return neighbours;
 };
 
 const verifyRules = function(numOfNeighbours) {
