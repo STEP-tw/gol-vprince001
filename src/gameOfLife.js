@@ -1,4 +1,4 @@
-const { getCartisianProduct } = require("./lib.js");
+const { getCartisianProduct, validateNeighbours } = require("./lib.js");
 
 const nextGeneration = function(currGeneration,bounds) {
   let limits = extractLimits(bounds);
@@ -55,12 +55,6 @@ const getValidNeighbours = function(cell, neighbourCandidates,limits) {
 const remove = function(cell) { 
   return function (element) { 
     return !( element[0] == cell[0] && element[1] == cell[1] )
-  };
-};
-
-const validateNeighbours = function(limits) { 
-  return function (element) { 
-    return ! ( element.some( (element => (element < limits.topX && element < limits.topY) || (element > limits.bottomX && element > limits.bottomY) ) ) )
   };
 };
 

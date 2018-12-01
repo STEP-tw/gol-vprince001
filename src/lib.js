@@ -7,4 +7,10 @@ const getCartisianProduct = function(columnNeighbours) {
   }
 };
 
-module.exports = { getCartisianProduct };
+const validateNeighbours = function(limits) { 
+  return function (element) { 
+    return ! ( element.some( (element => (element < limits.topX && element < limits.topY) || (element > limits.bottomX && element > limits.bottomY) ) ) )
+  };
+};
+
+module.exports = { getCartisianProduct, validateNeighbours };
